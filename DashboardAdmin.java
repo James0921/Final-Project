@@ -133,7 +133,8 @@ public class DashboardAdmin extends JFrame{
                 
                 JButton insertBtn = new JButton("Insert");
                 insertBtn.setBackground(Color.GREEN);
-                insertBtn.setPreferredSize(new Dimension(100,50));
+                insertBtn.setFont(new Font("Arial", Font.BOLD, 25));
+                insertBtn.setPreferredSize(new Dimension(150,50));
                 
                 JPanel panel5 = new JPanel(new GridBagLayout());
                 panel5.add(insertBtn);
@@ -323,7 +324,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("STUDENTS RECORDS");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
                 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
