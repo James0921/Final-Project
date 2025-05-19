@@ -4,6 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginPage extends JFrame{
+    JFrame frame = new JFrame("Login");
+    private String username;
+    private String password;
+
+    public void setUserName(String userName){
+        this.username = userName;
+    }
+
+    public String getUserName(){
+        return username;
+    }
 
     private GridBagConstraints gbc(int x, int y, int width, int anchor, Insets insets){
         GridBagConstraints gbc = new GridBagConstraints();
@@ -16,7 +27,6 @@ public class LoginPage extends JFrame{
     }
 
     public LoginPage(){
-        JFrame frame = new JFrame("Login Window");
         frame.setSize(400,350);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,7 +37,7 @@ public class LoginPage extends JFrame{
         JLabel userLbl = new JLabel("Username: ");
         JTextField userTxt = new JTextField("", 15);
 
-        JLabel passLbl = new JLabel("Username: ");
+        JLabel passLbl = new JLabel("Password: ");
         JTextField passTxt = new JTextField("", 15);
 
         JLabel typeLbl = new JLabel("Admin/Teacher/Student: ");
@@ -39,15 +49,17 @@ public class LoginPage extends JFrame{
         loginBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){ 
                 String typeInput = typeTxt.getText();
-                
+
+                setUserName(userTxt.getText());
+
                 if(typeInput.equalsIgnoreCase("admin")){
-                    new DashboardAdmin();
+                    new DashboardAdmin(LoginPage.this);
                     frame.dispose(); 
                 } else if(typeInput.equalsIgnoreCase("student")){
-                    new DashboardStudent();
+                    new DashboardStudent(LoginPage.this);
                     frame.dispose(); 
                 } else if(typeInput.equalsIgnoreCase("teacher")){
-                    new DashboardTeacher();
+                    new DashboardTeacher(LoginPage.this);
                     frame.dispose(); 
                 } else {
                     JOptionPane.showMessageDialog(null, "Please type a valid input");
@@ -68,7 +80,9 @@ public class LoginPage extends JFrame{
 
 
         frame.add(panel);
-
-        frame.setVisible(true);
     }
+
+    public void startFrame(){
+        frame.setVisible(true);
+    };
 }

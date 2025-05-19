@@ -13,26 +13,30 @@ public class DashboardAdmin extends JFrame{
         gbc.insets = inset;
         return gbc;
     }
-    public DashboardAdmin(){
+    public DashboardAdmin(LoginPage loginPage){
         JFrame frame = new JFrame("Admin Dashboard");
-        frame.setSize(1000,600);
+        frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel adminLbl = new JLabel("JOHN (Admin)");
+        JLabel adminLbl = new JLabel(loginPage.getUserName() + "(Admin)");
         adminLbl.setFont(new Font("Arial", Font.BOLD, 19));
 
         JButton addTeacherBtn = new JButton("Add new Teacher");
         addTeacherBtn.setBackground(Color.LIGHT_GRAY);
+        addTeacherBtn.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton addStudentBtn = new JButton("Add new Student");
         addStudentBtn.setBackground(Color.LIGHT_GRAY);
+        addStudentBtn.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton teacherRec = new JButton("Teachers Records");
         teacherRec.setBackground(Color.LIGHT_GRAY);
+        teacherRec.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton studentRec = new JButton("Students Records");
         studentRec.setBackground(Color.LIGHT_GRAY);
+        studentRec.setFont(new Font("Arial", Font.BOLD, 40));
 
         //*Dto i-modify yung functions
         addStudentBtn.addActionListener(new ActionListener(){
@@ -42,7 +46,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("JOHN(ADMIN) - Add Student");
+                JLabel label1 = new JLabel("ADD STUDENT");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -154,7 +158,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("JOHN(ADMIN) - Add Teacher");
+                JLabel label1 = new JLabel("ADD TEACHER");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -267,7 +271,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("Pedro Penduko(ADMIN) - Teachers Records");
+                JLabel label1 = new JLabel("TEACHER RECORDS");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
                 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -306,7 +310,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("Pedro Penduko(ADMIN) - Students Records");
+                JLabel label1 = new JLabel("STUDENTS RECORDS");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
                 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -340,16 +344,17 @@ public class DashboardAdmin extends JFrame{
 
         JPanel panel1 = new JPanel(new GridBagLayout());
         panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        JPanel rightPanel = new JPanel(new GridBagLayout());
-        rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
+        JPanel leftPanel = new JPanel(new GridLayout(2,1));
+        //leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Add Operations"));
+        JPanel rightPanel = new JPanel(new GridLayout(2,1));
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Records"));
+
         panel1.add(adminLbl, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(10,0,10,0)));
-        leftPanel.add(addTeacherBtn, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(10,0,10,0)));
-        leftPanel.add(addStudentBtn, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(10,0,10,0)));
-        rightPanel.add(teacherRec, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(10,0,10,0)));
-        rightPanel.add(studentRec, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(10,0,10,0)));
+        leftPanel.add(addTeacherBtn);
+        leftPanel.add(addStudentBtn);
+        rightPanel.add(teacherRec);
+        rightPanel.add(studentRec);
 
         JPanel mainBodyPanel = new JPanel(new GridLayout(1, 2)); // 1 row, 2 columns
         mainBodyPanel.add(leftPanel);
@@ -358,5 +363,5 @@ public class DashboardAdmin extends JFrame{
         frame.add(panel1, BorderLayout.NORTH);
         frame.add(mainBodyPanel);
         frame.setVisible(true);
-    }
+    } 
 }

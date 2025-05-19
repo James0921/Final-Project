@@ -14,13 +14,13 @@ public class DashboardTeacher extends JFrame{
         return gbc;
     }
 
-    public DashboardTeacher(){
+    public DashboardTeacher(LoginPage loginPage){
         JFrame frame = new JFrame("Teacher Dashboads");
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel label1 = new JLabel("Tralelo Tralala(TEACHER)");
+        JLabel label1 = new JLabel(loginPage.getUserName() + "(TEACHER)");
         label1.setFont(new Font("Arial", Font.BOLD, 19));
 
         JPanel panel1 = new JPanel(new GridBagLayout());
@@ -30,11 +30,11 @@ public class DashboardTeacher extends JFrame{
 
         JButton classListBtn = new JButton("Class List");
         classListBtn.setBackground(Color.LIGHT_GRAY);
-        classListBtn.setPreferredSize(new Dimension(200,50));
+        classListBtn.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton inputGradesBtn = new JButton("Input Grades");
         inputGradesBtn.setBackground(Color.LIGHT_GRAY);
-        inputGradesBtn.setPreferredSize(new Dimension(200,50));
+        inputGradesBtn.setFont(new Font("Arial", Font.BOLD, 40));
 
         classListBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -43,7 +43,7 @@ public class DashboardTeacher extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("Tralelo Tralala(TEACHER) - Class List");
+                JLabel label1 = new JLabel("CLASS LIST");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -77,7 +77,7 @@ public class DashboardTeacher extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("Tralalelo Tralala(TEACHER) - Input Grades");
+                JLabel label1 = new JLabel("INPUT GRADES");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -123,16 +123,14 @@ public class DashboardTeacher extends JFrame{
             }
         });
 
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        leftPanel.add(classListBtn, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(0,0,5,0)));
-        leftPanel.add(inputGradesBtn, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(0,0,5,0)));
+        JPanel leftPanel = new JPanel(new GridLayout(2,1));
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Operations"));
+        leftPanel.add(classListBtn);
+        leftPanel.add(inputGradesBtn);
 
         JPanel rightPanel = new JPanel(new GridBagLayout());
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         JPanel mainPanel = new JPanel(new GridLayout(1,2));
-
-
         
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);

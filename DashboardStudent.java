@@ -4,23 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DashboardStudent extends JFrame{
-    private GridBagConstraints gbc(int x, int y, int width, int anchor, Insets inset){
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = x;
-        gbc.gridy = y;
-        gbc.gridwidth = width;
-        gbc.anchor = anchor;
-        gbc.insets = inset;
-        return gbc;
-    }
-
-    public DashboardStudent(){
+    public DashboardStudent(LoginPage loginPage){
         JFrame frame = new JFrame("Student Dashboard");
-        frame.setSize(800,600);
+        frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel label1 = new JLabel("Bhalerina Chapocina(STUDENT)");
+        JLabel label1 = new JLabel(loginPage.getUserName() +"(STUDENT)");
         label1.setFont(new Font("Arial", Font.BOLD, 19));
         JPanel panel1 = new JPanel(new GridBagLayout());
         panel1.setPreferredSize(new Dimension(800,100));
@@ -29,10 +19,10 @@ public class DashboardStudent extends JFrame{
 
         JButton gradeBtn = new JButton("Grades");
         gradeBtn.setBackground(Color.LIGHT_GRAY);
-        gradeBtn.setPreferredSize(new Dimension(100,50));
+        gradeBtn.setFont(new Font("Arial", Font.BOLD, 40));
         JButton scheduleBtn = new JButton("Schedules");
         scheduleBtn.setBackground(Color.LIGHT_GRAY);
-        scheduleBtn.setPreferredSize(new Dimension(100,50));
+        scheduleBtn.setFont(new Font("Arial", Font.BOLD, 40));
 
         gradeBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -41,7 +31,7 @@ public class DashboardStudent extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("Bhallerina Chapocina(Student) - GRADES");
+                JLabel label1 = new JLabel("GRADES");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -75,7 +65,7 @@ public class DashboardStudent extends JFrame{
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
 
-                JLabel label1 = new JLabel("Bhallerina Chapocina(Student) - SCHEDULES");
+                JLabel label1 = new JLabel("SCHEDULES");
                 label1.setFont(new Font("Arial", Font.BOLD, 19));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
@@ -102,13 +92,13 @@ public class DashboardStudent extends JFrame{
             }
         });
 
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        leftPanel.add(gradeBtn, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,10,0)));
-        leftPanel.add(scheduleBtn, gbc(0,1,2,GridBagConstraints.CENTER, new Insets(0,0,10,0)));
+        JPanel leftPanel = new JPanel(new GridLayout(2,1));
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Operations"));
+        leftPanel.add(gradeBtn);
+        leftPanel.add(scheduleBtn);
         
         JPanel rightPanel = new JPanel(new GridBagLayout());
-        rightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Operations"));
 
         JPanel mainPanel = new JPanel(new GridLayout());
         mainPanel.add(leftPanel);
