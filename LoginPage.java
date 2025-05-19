@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class LoginPage extends JFrame{
     JFrame frame = new JFrame("Login");
     private String username;
-    private String password;
+    //private String password;
 
     public void setUserName(String userName){
         this.username = userName;
@@ -32,7 +32,7 @@ public class LoginPage extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel label1 = new JLabel("Log In");
-        label1.setFont(new Font("Arial", Font.BOLD, 19));
+        label1.setFont(new Font("Arial", Font.BOLD, 40));
 
         JLabel userLbl = new JLabel("Username: ");
         JTextField userTxt = new JTextField("", 15);

@@ -1,17 +1,19 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DashboardStudent extends JFrame{
     public DashboardStudent(LoginPage loginPage){
-        JFrame frame = new JFrame("Student Dashboard");
+        JFrame frame = new JFrame("Student Dashbo           ard");
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
         JLabel label1 = new JLabel(loginPage.getUserName() +"(STUDENT)");
-        label1.setFont(new Font("Arial", Font.BOLD, 19));
+        label1.setFont(new Font("Arial", Font.BOLD, 40));
         JPanel panel1 = new JPanel(new GridBagLayout());
         panel1.setPreferredSize(new Dimension(800,100));
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -32,7 +34,7 @@ public class DashboardStudent extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("GRADES");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
@@ -47,6 +49,16 @@ public class DashboardStudent extends JFrame{
                 };
 
                 JTable table = new JTable(data, columnTitle);
+
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+                for (int i = 0; i < table.getColumnCount(); i++) {
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                }
+
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Arial", Font.BOLD, 19));
 
                 table.setRowHeight(50);
                 JScrollPane scrollPane = new JScrollPane(table);
@@ -66,21 +78,29 @@ public class DashboardStudent extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("SCHEDULES");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
-                String[] columnTitle = {"Subject", "Grades"};
+                String[] columnTitle = {"Subject", "Day", "Time"};  
 
                 Object[][] data = {
-                    {"Science", 88.83},
-                    {"Computer System Servicing", "91.01"},
-                    {"", ""}
+                    {"Science", "Monday", "8:00 AM"},
+                    {"Computer System Servicing", "Monday", "3:00 PM"},
+                    {"", "", ""}
                 };
-
+                
                 JTable table = new JTable(data, columnTitle);
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Arial", Font.BOLD, 19));
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+                for(int i = 0; i < table.getColumnCount(); i++){
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                }
 
                 table.setRowHeight(50);
                 JScrollPane scrollPane = new JScrollPane(table);

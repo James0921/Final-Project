@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +24,7 @@ public class DashboardTeacher extends JFrame{
         frame.setLocationRelativeTo(null);
 
         JLabel label1 = new JLabel(loginPage.getUserName() + "(TEACHER)");
-        label1.setFont(new Font("Arial", Font.BOLD, 19));
+        label1.setFont(new Font("Arial", Font.BOLD, 40));
 
         JPanel panel1 = new JPanel(new GridBagLayout());
         panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -44,7 +47,7 @@ public class DashboardTeacher extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("CLASS LIST");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
@@ -59,6 +62,15 @@ public class DashboardTeacher extends JFrame{
                 };
 
                 JTable table = new JTable(data, columnTitle);
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Arial", Font.BOLD, 19));
+
+                DefaultTableCellRenderer centerRow = new DefaultTableCellRenderer();
+                centerRow.setHorizontalAlignment(SwingConstants.CENTER);
+
+                for(int i = 0; i < table.getColumnCount(); i++){
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRow);
+                }
 
                 table.setRowHeight(50);
                 JScrollPane scrollPane = new JScrollPane(table);
@@ -78,7 +90,7 @@ public class DashboardTeacher extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("INPUT GRADES");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -99,10 +111,13 @@ public class DashboardTeacher extends JFrame{
 
                 JButton insertBtn = new JButton("Insert");
                 insertBtn.setBackground(Color.green);
-                insertBtn.setPreferredSize(new Dimension(100,30));
+                insertBtn.setFont(new Font("Arial", Font.BOLD, 25));
+                insertBtn.setPreferredSize(new Dimension(150,50));
+
                 JButton searchBtn = new JButton("Search");
                 searchBtn.setBackground(Color.green);
-                searchBtn.setPreferredSize(new Dimension(100,30));
+                searchBtn.setFont(new Font("Arial", Font.BOLD, 25));
+                searchBtn.setPreferredSize(new Dimension(150,50));
 
                 JPanel panel2 = new JPanel(new GridBagLayout());
                 panel2.add(studentNameLbl, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(0, 0, 0, 0)));
@@ -111,8 +126,8 @@ public class DashboardTeacher extends JFrame{
                 panel2.add(subjectTxt, gbc(1,1,1,GridBagConstraints.CENTER, new Insets(0, 10, 0, 10)));
                 panel2.add(gradeLbl, gbc(2,0,1,GridBagConstraints.CENTER, new Insets(0, 0, 0, 0)));
                 panel2.add(gradeTxt, gbc(2,1,1,GridBagConstraints.CENTER, new Insets(0, 10, 0, 10)));
-                panel2.add(insertBtn, gbc(0,2,1,GridBagConstraints.CENTER, new Insets(10, 10, 0, 10)));
-                panel2.add(searchBtn, gbc(1,2,1,GridBagConstraints.CENTER, new Insets(10, 10, 0, 10)));
+                panel2.add(insertBtn, gbc(0,2,1,GridBagConstraints.CENTER, new Insets(30, 30, 0, 30)));
+                panel2.add(searchBtn, gbc(1,2,1,GridBagConstraints.CENTER, new Insets(30, 30, 0, 30)));
 
                 JPanel mainPanel = new JPanel(new GridLayout(2,1));
                 frame.add(panel1, BorderLayout.NORTH);

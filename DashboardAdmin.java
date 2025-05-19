@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +23,7 @@ public class DashboardAdmin extends JFrame{
         frame.setLocationRelativeTo(null);
 
         JLabel adminLbl = new JLabel(loginPage.getUserName() + "(Admin)");
-        adminLbl.setFont(new Font("Arial", Font.BOLD, 19));
+        adminLbl.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton addTeacherBtn = new JButton("Add new Teacher");
         addTeacherBtn.setBackground(Color.LIGHT_GRAY);
@@ -47,7 +50,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("ADD STUDENT");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
@@ -99,7 +102,7 @@ public class DashboardAdmin extends JFrame{
                 panel2.add(confirmPassTxt, gbc(3,6,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
 
                 JLabel subjectLbl = new JLabel("Subject");
-                subjectLbl.setFont(new Font("Arial", Font.BOLD, 19));
+                subjectLbl.setFont(new Font("Arial", Font.BOLD, 30));
 
                 JCheckBox scienceChk = new JCheckBox("Science");
                 JCheckBox englishChk = new JCheckBox("English");
@@ -114,7 +117,7 @@ public class DashboardAdmin extends JFrame{
                 panel3.add(filipinoChk, gbc(0,4,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
 
                 JLabel classesLbl = new JLabel("Classes");
-                classesLbl.setFont(new Font("Arial", Font.BOLD, 19));
+                classesLbl.setFont(new Font("Arial", Font.BOLD, 30));
 
                 JCheckBox bsit2A = new JCheckBox("BSIT 2A");
                 JCheckBox bsit2B = new JCheckBox("BSIT 2B");
@@ -159,7 +162,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("ADD TEACHER");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
@@ -211,7 +214,7 @@ public class DashboardAdmin extends JFrame{
                 panel2.add(confirmPassTxt, gbc(3,6,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
 
                 JLabel subjectLbl = new JLabel("Subject");
-                subjectLbl.setFont(new Font("Arial", Font.BOLD, 19));
+                subjectLbl.setFont(new Font("Arial", Font.BOLD, 30));
 
                 JCheckBox scienceChk = new JCheckBox("Science");
                 JCheckBox englishChk = new JCheckBox("English");
@@ -226,7 +229,7 @@ public class DashboardAdmin extends JFrame{
                 panel3.add(filipinoChk, gbc(0,4,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
 
                 JLabel classesLbl = new JLabel("Classes");
-                classesLbl.setFont(new Font("Arial", Font.BOLD, 19));
+                classesLbl.setFont(new Font("Arial", Font.BOLD, 30));
 
                 JCheckBox bsit2A = new JCheckBox("BSIT 2A");
                 JCheckBox bsit2B = new JCheckBox("BSIT 2B");
@@ -272,7 +275,7 @@ public class DashboardAdmin extends JFrame{
                 frame.setLocationRelativeTo(null);
 
                 JLabel label1 = new JLabel("TEACHER RECORDS");
-                label1.setFont(new Font("Arial", Font.BOLD, 19));
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
                 
                 JPanel panel1 = new JPanel(new GridBagLayout());
                 panel1.setPreferredSize(new Dimension(800,100));
@@ -292,6 +295,15 @@ public class DashboardAdmin extends JFrame{
                 };
 
                 JTable table = new JTable(data, columnTitles);
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Arial", Font.BOLD, 19));
+
+                DefaultTableCellRenderer centerRow = new DefaultTableCellRenderer();
+                centerRow.setHorizontalAlignment(SwingConstants.CENTER);
+
+                for(int i = 0; i < table.getColumnCount(); i++){
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRow);
+                }
 
                 table.setRowHeight(50);
                 JScrollPane scrollPane = new JScrollPane(table);
@@ -317,7 +329,7 @@ public class DashboardAdmin extends JFrame{
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
-                String[] columnTitles = {"Name", "Classes", "Subjects"};
+                String[] columnTitles = {"Name", "Class", "Subjects"};
 
                 Object[][] data = {
                     {"Bhalerina Chapocina", "BSIT-2M", "English, Math, SCience"},
@@ -331,6 +343,16 @@ public class DashboardAdmin extends JFrame{
                 };
 
                 JTable table = new JTable(data, columnTitles);
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Arial", Font.BOLD, 19));
+
+                DefaultTableCellRenderer centerRow = new DefaultTableCellRenderer();
+                centerRow.setHorizontalAlignment(SwingConstants.CENTER);
+
+                for(int i = 0; i < table.getColumnCount(); i++){
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRow);
+                }
+
 
                 table.setRowHeight(50);
                 JScrollPane scrollPane = new JScrollPane(table);
