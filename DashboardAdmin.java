@@ -5,6 +5,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class DashboardAdmin extends JFrame{
     private GridBagConstraints gbc(int x, int y, int width, int anchor, Insets inset){
@@ -75,61 +76,59 @@ public class DashboardAdmin extends JFrame{
                 JLabel emailLbl = new JLabel("Email");
                 JTextField emailTxt = new JTextField(15); 
 
+                JLabel usernameLbl = new JLabel("Username");
+                JTextField usernameTxt = new JTextField(15); 
+
                 JLabel passLbl = new JLabel("Password");
                 JTextField passTxt = new JTextField(15); 
 
                 JLabel confirmPassLbl = new JLabel("Confirm Password");
                 JTextField confirmPassTxt = new JTextField(15); 
 
+                JLabel subjectLbl = new JLabel("Subject");
+                subjectLbl.setFont(new Font("Arial", Font.BOLD, 20));
+
+                String[] subjectOptions = {"Science", "English", "Math", "Filipino"};
+                JComboBox<String> subjectMenu = new JComboBox<>(subjectOptions);
+
+                JLabel classesLbl = new JLabel("Classes");
+                classesLbl.setFont(new Font("Arial", Font.BOLD, 20));
+
+                String[] classOptions = {"BSIT-2A", "BSIT-2B", "BSIT-2C", "BSIT-2D"};
+                JComboBox<String> classMenu = new JComboBox<>(classOptions);
+
                 JPanel panel2 = new JPanel(new GridBagLayout());
                 panel2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
 
-                panel2.add(lastNameLbl, gbc(0,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(lastNameTxt, gbc(0,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(firstNameLbl, gbc(0,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(firstNameTxt, gbc(0,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(middleNameLbl, gbc(0,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(middleNameTxt, gbc(0,6,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(birthDateLbl, gbc(1,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(birthDateTxt, gbc(1,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(genderLbl, gbc(1,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(genderTxt, gbc(1,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(emailLbl, gbc(3,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(emailTxt, gbc(3,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(passLbl, gbc(3,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(passTxt, gbc(3,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(confirmPassLbl, gbc(3,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(confirmPassTxt, gbc(3,6,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(lastNameLbl, gbc(0,0,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(lastNameTxt, gbc(0,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(firstNameLbl, gbc(1,0,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(firstNameTxt, gbc(1,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(middleNameLbl, gbc(2,0,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(middleNameTxt, gbc(2,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
 
-                JLabel subjectLbl = new JLabel("Subject");
-                subjectLbl.setFont(new Font("Arial", Font.BOLD, 30));
+                panel2.add(birthDateLbl, gbc(0,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(birthDateTxt, gbc(0,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(genderLbl, gbc(1,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(genderTxt, gbc(1,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(emailLbl, gbc(2,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(emailTxt, gbc(2,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
 
-                JCheckBox scienceChk = new JCheckBox("Science");
-                JCheckBox englishChk = new JCheckBox("English");
-                JCheckBox mathChk = new JCheckBox("Math");
-                JCheckBox filipinoChk = new JCheckBox("Filipino");
+                panel2.add(usernameLbl, gbc(0,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(usernameTxt, gbc(0,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));                
+                panel2.add(passLbl, gbc(1,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(passTxt, gbc(1,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(confirmPassLbl, gbc(2,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(confirmPassTxt, gbc(2,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
 
                 JPanel panel3 = new JPanel(new GridBagLayout());
+
                 panel3.add(subjectLbl, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
-                panel3.add(scienceChk, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel3.add(englishChk, gbc(0,2,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel3.add(mathChk, gbc(0,3,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel3.add(filipinoChk, gbc(0,4,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-
-                JLabel classesLbl = new JLabel("Classes");
-                classesLbl.setFont(new Font("Arial", Font.BOLD, 30));
-
-                JCheckBox bsit2A = new JCheckBox("BSIT 2A");
-                JCheckBox bsit2B = new JCheckBox("BSIT 2B");
-                JCheckBox bsit2C= new JCheckBox("BSIT 2C");
-                JCheckBox bsit2D = new JCheckBox("BSIT 2D");
+                panel3.add(subjectMenu, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(2,2,2,2)));
 
                 JPanel panel4 = new JPanel(new GridBagLayout());
                 panel4.add(classesLbl, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
-                panel4.add(bsit2A, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel4.add(bsit2B, gbc(0,2,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel4.add(bsit2C, gbc(0,3,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel4.add(bsit2D, gbc(0,4,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
+                panel4.add(classMenu, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
                 
                 JButton insertBtn = new JButton("Insert");
                 insertBtn.setBackground(Color.GREEN);
@@ -139,15 +138,41 @@ public class DashboardAdmin extends JFrame{
                 JPanel panel5 = new JPanel(new GridBagLayout());
                 panel5.add(insertBtn);
 
+                insertBtn.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        UserDao userDao = new UserDao();
 
-                JPanel mainPanel = new JPanel(new GridLayout(2,1));
-                JPanel bottomPanel = new JPanel(new GridLayout(1,2));
+                        java.sql.Date birthDate= null;
+                        try{
+                            String dateText = birthDateTxt.getText();
+                            birthDate = java.sql.Date.valueOf(dateText);
+                        }catch(IllegalArgumentException ex){
+                            JOptionPane.showMessageDialog(null, "Invalid date format. Please enter date as yyyy-mm-dd");
+                            return;
+                        }
+
+                        String selectedClass = (String)classMenu.getSelectedItem();
+
+                        boolean success = userDao.insertStudent(lastNameTxt.getText(),firstNameTxt.getText(),middleNameTxt.getText(),birthDate,genderTxt.getText(),emailTxt.getText(),passTxt.getText(),usernameTxt.getText(),selectedClass);
+
+                        if(success){
+                            JOptionPane.showMessageDialog(null,"Student added successfully");
+                            frame.dispose();
+                        } else{
+                            JOptionPane.showMessageDialog(null,"Failed to add, please try again");
+                        }
+
+                    }
+                });
+
+                JPanel mainPanel = new JPanel(new GridLayout(1,1));
+                JPanel bottomPanel = new JPanel(new GridBagLayout());
                 
                 frame.add(panel1, BorderLayout.NORTH);
-                mainPanel.add(panel2);
-                bottomPanel.add(panel3);
-                bottomPanel.add(panel4);
-                bottomPanel.add(panel5);
+                bottomPanel.add(panel2, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                bottomPanel.add(panel3, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(20,185,0,0)));
+                bottomPanel.add(panel4, gbc(1,1,1,GridBagConstraints.CENTER, new Insets(20,0,0,175)));
+                bottomPanel.add(panel5, gbc(0,2,2,GridBagConstraints.CENTER, new Insets(30,0,0,0)));
                 mainPanel.add(bottomPanel);
 
                 frame.add(mainPanel);
@@ -157,11 +182,11 @@ public class DashboardAdmin extends JFrame{
 
         addTeacherBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                JFrame frame = new JFrame("Add Teacher");
+                final JFrame frame = new JFrame("Add Teacher");
                 frame.setSize(800,600);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
-
+                
                 JLabel label1 = new JLabel("ADD TEACHER");
                 label1.setFont(new Font("Arial", Font.BOLD, 40));
 
@@ -179,6 +204,15 @@ public class DashboardAdmin extends JFrame{
                 JLabel middleNameLbl = new JLabel("Middle Initial");
                 JTextField middleNameTxt = new JTextField(15); 
 
+                JLabel usernameLbl = new JLabel("Username");
+                JTextField usernameTxt = new JTextField(15); 
+
+                JLabel passLbl = new JLabel("Password");
+                JTextField passTxt = new JTextField(15); 
+
+                JLabel confirmPassLbl = new JLabel("Confirm Password");
+                JTextField confirmPassTxt = new JTextField(15); 
+
                 JLabel birthDateLbl = new JLabel("Date of Birth");
                 JTextField birthDateTxt = new JTextField(15); 
                 
@@ -188,78 +222,92 @@ public class DashboardAdmin extends JFrame{
                 JLabel emailLbl = new JLabel("Email");
                 JTextField emailTxt = new JTextField(15); 
 
-                JLabel passLbl = new JLabel("Password");
-                JTextField passTxt = new JTextField(15); 
-
-                JLabel confirmPassLbl = new JLabel("Confirm Password");
-                JTextField confirmPassTxt = new JTextField(15); 
-
-                JPanel panel2 = new JPanel(new GridBagLayout());
-                panel2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
-
-                panel2.add(lastNameLbl, gbc(0,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(lastNameTxt, gbc(0,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(firstNameLbl, gbc(0,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(firstNameTxt, gbc(0,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(middleNameLbl, gbc(0,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(middleNameTxt, gbc(0,6,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(birthDateLbl, gbc(1,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(birthDateTxt, gbc(1,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(genderLbl, gbc(1,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(genderTxt, gbc(1,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(emailLbl, gbc(3,1,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(emailTxt, gbc(3,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(passLbl, gbc(3,3,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(passTxt, gbc(3,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(confirmPassLbl, gbc(3,5,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-                panel2.add(confirmPassTxt, gbc(3,6,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
-
                 JLabel subjectLbl = new JLabel("Subject");
-                subjectLbl.setFont(new Font("Arial", Font.BOLD, 30));
+                subjectLbl.setFont(new Font("Arial", Font.BOLD, 20));
 
-                JCheckBox scienceChk = new JCheckBox("Science");
-                JCheckBox englishChk = new JCheckBox("English");
-                JCheckBox mathChk = new JCheckBox("Math");
-                JCheckBox filipinoChk = new JCheckBox("Filipino");
-
-                JPanel panel3 = new JPanel(new GridBagLayout());
-                panel3.add(subjectLbl, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
-                panel3.add(scienceChk, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel3.add(englishChk, gbc(0,2,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel3.add(mathChk, gbc(0,3,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel3.add(filipinoChk, gbc(0,4,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
+                String[] subjectOptions = {"Science", "Math", "English", "Filipino"};
+                JComboBox<String> subjectMenu = new JComboBox<>(subjectOptions);
 
                 JLabel classesLbl = new JLabel("Classes");
-                classesLbl.setFont(new Font("Arial", Font.BOLD, 30));
+                classesLbl.setFont(new Font("Arial", Font.BOLD, 20));
 
-                JCheckBox bsit2A = new JCheckBox("BSIT 2A");
-                JCheckBox bsit2B = new JCheckBox("BSIT 2B");
-                JCheckBox bsit2C= new JCheckBox("BSIT 2C");
-                JCheckBox bsit2D = new JCheckBox("BSIT 2D");
+                String[] classOptions = {"BSIT-2A", "BSIT-2B", "BSIT-2C", "BSIT-2D"};
+                JComboBox<String> classMenu = new JComboBox<>(classOptions);
+
+                JPanel panel2 = new JPanel(new GridBagLayout());
+
+                panel2.add(lastNameLbl, gbc(0,0,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(lastNameTxt, gbc(0,1,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+                panel2.add(firstNameLbl, gbc(1,0,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(firstNameTxt, gbc(1,1,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+                panel2.add(middleNameLbl, gbc(2,0,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(middleNameTxt, gbc(2,1,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+
+                panel2.add(usernameLbl, gbc(0,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(usernameTxt, gbc(0,3,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+                panel2.add(passLbl, gbc(1,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(passTxt, gbc(1,3,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+                panel2.add(confirmPassLbl, gbc(2,2,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(confirmPassTxt, gbc(2,3,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+
+                panel2.add(birthDateLbl, gbc(0,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(birthDateTxt, gbc(0,5,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+                panel2.add(genderLbl, gbc(1,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(genderTxt, gbc(1,5,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+                panel2.add(emailLbl, gbc(2,4,1,GridBagConstraints.CENTER,new Insets(5,5,0,5)));
+                panel2.add(emailTxt, gbc(2,5,1,GridBagConstraints.CENTER,new Insets(5,5,5,5)));
+
+                JPanel panel3 = new JPanel(new GridBagLayout());
+                panel3.add(subjectLbl, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                panel3.add(subjectMenu, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
 
                 JPanel panel4 = new JPanel(new GridBagLayout());
-                panel4.add(classesLbl, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
-                panel4.add(bsit2A, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel4.add(bsit2B, gbc(0,2,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel4.add(bsit2C, gbc(0,3,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
-                panel4.add(bsit2D, gbc(0,4,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
+                panel4.add(classesLbl, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                panel4.add(classMenu, gbc(0,1,1,GridBagConstraints.WEST, new Insets(2,2,2,2)));
                 
                 JButton insertBtn = new JButton("Insert");
                 insertBtn.setBackground(Color.GREEN);
-                insertBtn.setPreferredSize(new Dimension(100,50));
+                insertBtn.setFont(new Font("Arial", Font.BOLD, 20));
+                insertBtn.setPreferredSize(new Dimension(150,50));
+
+                insertBtn.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        UserDao userDao = new UserDao();
+
+                        java.sql.Date birthDate = null;
+                        try {
+                            String dateText = birthDateTxt.getText(); 
+                            birthDate = java.sql.Date.valueOf(dateText); 
+                        } catch (IllegalArgumentException ex) {
+                            JOptionPane.showMessageDialog(null, "Invalid date format. Please enter the date as yyyy-MM-dd.");
+                            return;
+                        }
+
+                        String selectedSubject = (String)subjectMenu.getSelectedItem();
+
+                        boolean success = userDao.insertTeacher(lastNameTxt.getText(), firstNameTxt.getText(), middleNameTxt.getText(), 
+                        birthDate, genderTxt.getText(), emailTxt.getText(), passTxt.getText(), selectedSubject, usernameTxt.getText());
+dispose(); 
+                        if(success){
+                            JOptionPane.showMessageDialog(null, "Teacher added successfuly");
+                            frame.dispose();
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Failed to register, please try again");
+                        }
+                    }
+                });
                 
                 JPanel panel5 = new JPanel(new GridBagLayout());
                 panel5.add(insertBtn);
 
-
-                JPanel mainPanel = new JPanel(new GridLayout(2,1));
-                JPanel bottomPanel = new JPanel(new GridLayout(1,2));
+                JPanel mainPanel = new JPanel(new GridLayout(1,1));
+                JPanel bottomPanel = new JPanel(new GridBagLayout());
                 
                 frame.add(panel1, BorderLayout.NORTH);
-                mainPanel.add(panel2);
-                bottomPanel.add(panel3);
-                bottomPanel.add(panel4);
-                bottomPanel.add(panel5);
+                bottomPanel.add(panel2, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                bottomPanel.add(panel3, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(20,185,0,0)));
+                bottomPanel.add(panel4, gbc(1,1,1,GridBagConstraints.CENTER, new Insets(20,0,0,175)));
+                bottomPanel.add(panel5, gbc(0,2,2,GridBagConstraints.CENTER, new Insets(30,0,0,0)));
                 mainPanel.add(bottomPanel);
 
                 frame.add(mainPanel);
@@ -282,18 +330,15 @@ public class DashboardAdmin extends JFrame{
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
-                String[] columnTitles = {"Name", "Classes", "Subjects"};
+                UserDao userDao = new UserDao();
+                List<Object[]> dbData = userDao.fetchTeacherTableData();
 
-                Object[][] data = {
-                    {"Tralalelo Tralala", "BSIT-2A, BSIT-2B", "Science"},
-                    {"Joey Doey", "BSIT-2C", "Math"},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""}
-                };
+                String[] columnTitles = {"Name", "Subjects", "Email"};
+
+                Object[][] data = new Object[dbData.size()][];
+                for(int i = 0; i < dbData.size(); i++){
+                    data[i] = dbData.get(i);
+                }
 
                 JTable table = new JTable(data, columnTitles);
                 JTableHeader header = table.getTableHeader();
@@ -330,18 +375,15 @@ public class DashboardAdmin extends JFrame{
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
-                String[] columnTitles = {"Name", "Class", "Subjects"};
+                UserDao userDao = new UserDao();
+                List<Object[]> dbData = userDao.fetchStudentsTableData();
 
-                Object[][] data = {
-                    {"Bhalerina Chapocina", "BSIT-2M", "English, Math, SCience"},
-                    {"Joey Doey", "BSIT-2C", "Css, App Dev"},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""},
-                    {"","",""}
-                };
+                String[] columnTitles = {"Name", "Class", "Email"};
+
+                Object[][] data = new Object[dbData.size()][];
+                for(int i = 0; i < dbData.size(); i++){
+                    data[i] = dbData.get(i);
+                }
 
                 JTable table = new JTable(data, columnTitles);
                 JTableHeader header = table.getTableHeader();
@@ -368,7 +410,6 @@ public class DashboardAdmin extends JFrame{
         JPanel panel1 = new JPanel(new GridBagLayout());
         panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JPanel leftPanel = new JPanel(new GridLayout(2,1));
-        //leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         leftPanel.setBorder(BorderFactory.createTitledBorder("Add Operations"));
         JPanel rightPanel = new JPanel(new GridLayout(2,1));
         rightPanel.setBorder(BorderFactory.createTitledBorder("Records"));

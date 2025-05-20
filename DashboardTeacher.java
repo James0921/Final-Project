@@ -5,6 +5,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class DashboardTeacher extends JFrame{
     private GridBagConstraints gbc(int x, int y, int width, int anchor, Insets inset){
@@ -101,11 +102,11 @@ public class DashboardTeacher extends JFrame{
                 JTextField studentNameTxt = new JTextField(15);
                 studentNameTxt.setPreferredSize(new Dimension(100,30));
 
-                JLabel subjectLbl = new JLabel("Student Name");
+                JLabel subjectLbl = new JLabel("Subject");
                 JTextField subjectTxt = new JTextField(15);
                 subjectTxt.setPreferredSize(new Dimension(100,30));
 
-                JLabel gradeLbl = new JLabel("Student Name");
+                JLabel gradeLbl = new JLabel("Grade");
                 JTextField gradeTxt = new JTextField(15);
                 gradeTxt.setPreferredSize(new Dimension(100,30));
 
@@ -118,6 +119,30 @@ public class DashboardTeacher extends JFrame{
                 searchBtn.setBackground(Color.green);
                 searchBtn.setFont(new Font("Arial", Font.BOLD, 25));
                 searchBtn.setPreferredSize(new Dimension(150,50));
+
+                insertBtn.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        UserDao userDao = new UserDao();
+
+                        try {
+                            Integer studentId = userDao.getStudentIdByName(studentNameTxt.getText());
+                            Double gradeInput = Double.parseDouble(gradeTxt.getText());
+
+                            if (studentId != null) {
+                                userDao.insertGrade(studentId, subjectTxt.getText(), gradeInput);
+                                JOptionPane.showMessageDialog(null, "Grade recorded successfully");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Student '" + studentNameTxt.getText() + "' does not exist in the database.");
+                            }
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+                            ex.printStackTrace();
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null, "Invalid grade input. Please enter a numeric value.");
+                        }
+
+                    }
+                });
 
                 JPanel panel2 = new JPanel(new GridBagLayout());
                 panel2.add(studentNameLbl, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(0, 0, 0, 0)));
