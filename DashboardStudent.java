@@ -40,13 +40,11 @@ public class DashboardStudent extends JFrame{
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
+                UserDao userDao = new UserDao();
+
                 String[] columnTitle = {"Subject", "Grades"};
 
-                Object[][] data = {
-                    {"Science", 88.83},
-                    {"Computer System Servicing", "91.01"},
-                    {"", ""}
-                };
+                Object[][] data = userDao.getStudentGrades(loginPage.getUserName());  
 
                 JTable table = new JTable(data, columnTitle);
 

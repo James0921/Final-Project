@@ -23,7 +23,7 @@ public class DashboardAdmin extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel adminLbl = new JLabel(loginPage.getUserName() + "(Admin)");
+        JLabel adminLbl = new JLabel(loginPage.getUserName());
         adminLbl.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton addTeacherBtn = new JButton("Add new Teacher");

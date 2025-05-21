@@ -53,17 +53,29 @@ public class LoginPage extends JFrame{
 
                 setUserName(userTxt.getText());
 
+                UserDao userDao = new UserDao();
+
                 if(choice == 0){
-                    new DashboardAdmin(LoginPage.this);
-                    frame.dispose(); 
+                    if(userTxt.getText().equalsIgnoreCase("admin1") && passTxt.getText().equals("123456")){
+                        new DashboardAdmin(LoginPage.this);
+                        frame.dispose(); 
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Wrong Username or Password");
+                    }
                 } else if(choice == 1){
-                    new DashboardStudent(LoginPage.this);
-                    frame.dispose(); 
+                    if(userDao.loginStudent(userTxt.getText(), passTxt.getText())){
+                        new DashboardStudent(LoginPage.this);
+                        frame.dispose(); 
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Wrong username or password");
+                    }
                 } else if(choice == 2){
-                    new DashboardTeacher(LoginPage.this);
-                    frame.dispose(); 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Please type a valid input");
+                    if(userDao.loginTeacher(userTxt.getText(),passTxt.getText())){
+                        new DashboardTeacher(LoginPage.this);
+                        frame.dispose(); 
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Wrong username or password");
+                    }
                 }
             };
         });

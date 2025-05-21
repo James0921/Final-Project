@@ -126,4 +126,82 @@ public class UserDao{
             stmt.executeUpdate();
         }
     }
+
+    public boolean loginStudent(String username, String password){
+        String query = "select password from students where lower(username) = lower(?)";
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement pst = conn.prepareStatement(query)){
+                pst.setString(1, username);
+                ResultSet rs = pst.executeQuery();
+
+                if(rs.next()){
+                    String storedPassword = rs.getString("password");
+                    return password.equals(storedPassword);
+                } else {
+                    return false;
+                }
+        } catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean loginTeacher(String username, String password){
+        String query = "select password from teachers where lower(username) = lower(?)";
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement pst = conn.prepareStatement(query)){
+                pst.setString(1,username);
+                ResultSet rs = pst.executeQuery();
+
+                if(rs.next()){
+                    String storedPassword = rs.getString("password");
+                    return password.equals(storedPassword);
+                } else{
+                    return false;
+                }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Object[][] getStudentGrades(String username){
+        String idQuery = "select student_id from students where lower(username) = lower(?)";
+        String detailQuery = "select subject, grade from grades where student_id = ?";
+
+        List<Object[]> rows = new ArrayList<>();
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement pst = conn.prepareStatement(idQuery)){
+
+            pst.setString(1, username);
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                int studentId = rs.getInt("student_id");
+
+                try(PreparedStatement detailPst = conn.prepareStatement(detailQuery)){
+                    detailPst.setInt(1, studentId);
+                    ResultSet detailRs = detailPst.executeQuery();
+
+                    while(detailRs.next()){
+                        Object[] row = new Object[2];
+                        row[0] = detailRs.getString("subject");
+                        row[1] = detailRs.getString("grade");
+                        rows.add(row);
+                    }
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        Object[][] data = new Object[rows.size()][2];
+        for(int i = 0; i < rows.size(); i++){
+            data[i] = rows.get(i);
+        } 
+        return data;
+    }
 }
