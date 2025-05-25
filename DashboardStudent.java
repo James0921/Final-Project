@@ -4,6 +4,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class DashboardStudent extends JFrame{
     public DashboardStudent(LoginPage loginPage){
@@ -82,13 +83,16 @@ public class DashboardStudent extends JFrame{
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
+                UserDao userDao = new UserDao();
+
                 String[] columnTitle = {"Subject", "Day", "Time"};  
 
-                Object[][] data = {
-                    {"Science", "Monday", "8:00 AM"},
-                    {"Computer System Servicing", "Monday", "3:00 PM"},
-                    {"", "", ""}
-                };
+                List<Object[]> schedTable = userDao.getSchedule(loginPage.getUserName());
+
+                Object[][] data = new Object[schedTable.size()][];
+                    for (int i = 0; i < schedTable.size(); i++) {
+                        data[i] = schedTable.get(i);
+                    }
                 
                 JTable table = new JTable(data, columnTitle);
                 JTableHeader header = table.getTableHeader();

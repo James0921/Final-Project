@@ -1,13 +1,17 @@
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.util.List;
 
 public class DashboardTeacher extends JFrame{
+    public String selectedSection;
+    
     private GridBagConstraints gbc(int x, int y, int width, int anchor, Insets inset){
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
@@ -54,13 +58,11 @@ public class DashboardTeacher extends JFrame{
                 panel1.setPreferredSize(new Dimension(800,100));
                 panel1.add(label1);
 
-                String[] columnTitle = {"Class" , "Subject"};
+                UserDao userDao = new UserDao();
 
-                Object[][] data = {
-                    {"BSIT-2M", "Science"},
-                    {"", ""},
-                    {"", ""}
-                };
+                String[] columnTitle = {"Section" , "Subject"};
+
+                Object[][] data = userDao.getClassList(loginPage.getUserName());
 
                 JTable table = new JTable(data, columnTitle);
                 JTableHeader header = table.getTableHeader();
@@ -85,80 +87,41 @@ public class DashboardTeacher extends JFrame{
 
         inputGradesBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                JFrame frame = new JFrame();
-                frame.setSize(800,500);
+                JFrame frame = new JFrame("selection");
+                frame.setSize(400,200);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
+                
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridBagLayout());
 
-                JLabel label1 = new JLabel("INPUT GRADES");
-                label1.setFont(new Font("Arial", Font.BOLD, 40));
+                UserDao userDao = new UserDao();
+                JLabel label = new JLabel("SELECT SECTION");
+                label.setFont(new Font("Arial", Font.PLAIN, 30));
 
-                JPanel panel1 = new JPanel(new GridBagLayout());
-                panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                panel1.setPreferredSize(new Dimension(800,100));
-                panel1.add(label1);
+                List<String> sections = userDao.fetchSectionName();
+                String[] sectionOption = sections.toArray(new String[0]);
 
-                JLabel studentNameLbl = new JLabel("Student Name");
-                JTextField studentNameTxt = new JTextField(15);
-                studentNameTxt.setPreferredSize(new Dimension(100,30));
+                JComboBox<String> sectionMenu = new JComboBox<>(sectionOption);
+                sectionMenu.setPreferredSize(new Dimension(100,40));
+                sectionMenu.setFont(new Font("Arial", Font.PLAIN, 20));
 
-                JLabel subjectLbl = new JLabel("Subject");
-                JTextField subjectTxt = new JTextField(15);
-                subjectTxt.setPreferredSize(new Dimension(100,30));
+                JButton enter = new JButton("Enter");
+                enter.setBackground(Color.GREEN);
+                enter.setFont(new Font("Arial", Font.BOLD, 25));
 
-                JLabel gradeLbl = new JLabel("Grade");
-                JTextField gradeTxt = new JTextField(15);
-                gradeTxt.setPreferredSize(new Dimension(100,30));
-
-                JButton insertBtn = new JButton("Insert");
-                insertBtn.setBackground(Color.green);
-                insertBtn.setFont(new Font("Arial", Font.BOLD, 25));
-                insertBtn.setPreferredSize(new Dimension(150,50));
-
-                JButton searchBtn = new JButton("Search");
-                searchBtn.setBackground(Color.green);
-                searchBtn.setFont(new Font("Arial", Font.BOLD, 25));
-                searchBtn.setPreferredSize(new Dimension(150,50));
-
-                insertBtn.addActionListener(new ActionListener(){
+                enter.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e){
-                        UserDao userDao = new UserDao();
-
-                        try {
-                            Integer studentId = userDao.getStudentIdByName(studentNameTxt.getText());
-                            Double gradeInput = Double.parseDouble(gradeTxt.getText());
-
-                            if (studentId != null) {
-                                userDao.insertGrade(studentId, subjectTxt.getText(), gradeInput);
-                                JOptionPane.showMessageDialog(null, "Grade recorded successfully");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Student '" + studentNameTxt.getText() + "' does not exist in the database.");
-                            }
-                        } catch (SQLException ex) {
-                            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
-                            ex.printStackTrace();
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Invalid grade input. Please enter a numeric value.");
-                        }
-
+                        selectedSection = (String) sectionMenu.getSelectedItem();
+                        String subjectName = userDao.getTeacherSubjectName(loginPage.getUserName());
+                        insertStudentTable(subjectName,selectedSection);
                     }
                 });
 
-                JPanel panel2 = new JPanel(new GridBagLayout());
-                panel2.add(studentNameLbl, gbc(0,0,1,GridBagConstraints.CENTER, new Insets(0, 0, 0, 0)));
-                panel2.add(studentNameTxt, gbc(0,1,1,GridBagConstraints.CENTER, new Insets(0, 10, 0, 10)));
-                panel2.add(subjectLbl, gbc(1,0,1,GridBagConstraints.CENTER, new Insets(0, 0, 0, 0)));
-                panel2.add(subjectTxt, gbc(1,1,1,GridBagConstraints.CENTER, new Insets(0, 10, 0, 10)));
-                panel2.add(gradeLbl, gbc(2,0,1,GridBagConstraints.CENTER, new Insets(0, 0, 0, 0)));
-                panel2.add(gradeTxt, gbc(2,1,1,GridBagConstraints.CENTER, new Insets(0, 10, 0, 10)));
-                panel2.add(insertBtn, gbc(0,2,1,GridBagConstraints.CENTER, new Insets(30, 30, 0, 30)));
-                panel2.add(searchBtn, gbc(1,2,1,GridBagConstraints.CENTER, new Insets(30, 30, 0, 30)));
-
-                JPanel mainPanel = new JPanel(new GridLayout(2,1));
-                frame.add(panel1, BorderLayout.NORTH);
-                mainPanel.add(panel2);           
-                frame.add(mainPanel);
-
+                panel.add(label, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,10,0)));
+                panel.add(sectionMenu, gbc(0,1,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                panel.add(enter, gbc(0,2,2,GridBagConstraints.CENTER, new Insets(10,0,0,0)));
+                frame.add(panel);
                 frame.setVisible(true);
             }
         });
@@ -179,5 +142,77 @@ public class DashboardTeacher extends JFrame{
         frame.add(panel1, BorderLayout.NORTH);
 
         frame.setVisible(true);
+    }
+
+    public void insertStudentTable(String subjectName, String selectedSection){
+        JFrame frame = new JFrame();
+                frame.setSize(800,600);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+
+                UserDao userDao = new UserDao();
+
+                JLabel label1 = new JLabel(subjectName);
+                label1.setFont(new Font("Arial", Font.BOLD, 40));
+                JLabel label2 = new JLabel(selectedSection);
+                label2.setFont(new Font("Arial", Font.PLAIN, 30));
+
+                JPanel panel1 = new JPanel(new GridBagLayout());
+                panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                panel1.setPreferredSize(new Dimension(400,100));
+                panel1.add(label1, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                panel1.add(label2, gbc(0,1,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
+                
+                List<Object[]> gradingTable = userDao.fetchSectionStudents(subjectName,selectedSection);
+
+                String[] columnTitles = {"STUDENT NAME", "GRADE"};
+
+                Object[][] data = new Object[gradingTable.size()][];
+                for(int i = 0; i < gradingTable.size(); i++){
+                    data[i] = gradingTable.get(i);
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data,columnTitles){
+                    public boolean isCellEditable(int row, int column){
+                        return column == 1;
+                    }
+                };
+
+                model.addTableModelListener(ex -> {
+                    if(ex.getType() == TableModelEvent.UPDATE){
+                        int row = ex.getFirstRow();
+                        int column = ex.getColumn();
+
+                        if(column ==1){
+                            String name = model.getValueAt(row,0).toString();
+                            Double newGrade = Double.parseDouble(model.getValueAt(row, 1).toString());
+                            
+                            boolean success = userDao.updateStudentGrade(newGrade,subjectName,name);
+                            if(success){
+                                JOptionPane.showMessageDialog(null,"Grade recorded successfully");
+                            }else{
+                                JOptionPane.showMessageDialog(null,"Error");
+                            }
+                        }
+                    }
+                });
+
+                JTable table = new JTable(model);
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Arial", Font.BOLD, 19));
+
+                DefaultTableCellRenderer centerRow = new DefaultTableCellRenderer();
+                centerRow.setHorizontalAlignment(SwingConstants.CENTER);
+                for(int i = 0; i < table.getColumnCount(); i++){
+                    table.getColumnModel().getColumn(i).setCellRenderer(centerRow);
+                }
+ 
+                table.setRowHeight(50);
+                JScrollPane scrollPane = new JScrollPane(table);
+
+                frame.add(panel1, BorderLayout.NORTH);;           
+                frame.add(scrollPane);
+
+                frame.setVisible(true);
     }
 }
