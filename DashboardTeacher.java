@@ -22,13 +22,40 @@ public class DashboardTeacher extends JFrame{
         return gbc;
     }
 
+    public static void buttonStyle(JButton... buttons){
+        for(JButton button : buttons){
+            button.setFont(new Font("Arial", Font.BOLD, 40));
+            button.setBackground(Color.LIGHT_GRAY);
+        }
+    }
+
+    public static void btnImage(JButton button, String imagePath){
+        ImageIcon image = new ImageIcon(DashboardAdmin.class.getResource(imagePath));
+        Image imageResized = image.getImage().getScaledInstance(100,100, Image.SCALE_SMOOTH);
+        ImageIcon iconResized = new ImageIcon(imageResized);
+
+        button.setIcon(iconResized);
+    }
+
     public DashboardTeacher(LoginPage loginPage){
         JFrame frame = new JFrame("Teacher Dashboads");
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel label1 = new JLabel(loginPage.getUserName() + "(TEACHER)");
+        JPanel background = new JPanel(){
+            public void paintComponent(Graphics g){
+                super.paintComponent(g);
+                Image image = new ImageIcon(getClass().getResource("res/ptcbg2.png")).getImage();
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        frame.setContentPane(background);
+
+        UserDao userDao = new UserDao();
+
+        JLabel label1 = new JLabel(userDao.getName(loginPage.getUserName()) + "(TEACHER)");
         label1.setFont(new Font("Arial", Font.BOLD, 40));
 
         JPanel panel1 = new JPanel(new GridBagLayout());
@@ -37,12 +64,13 @@ public class DashboardTeacher extends JFrame{
         panel1.add(label1, gbc(0,0,2,GridBagConstraints.CENTER, new Insets(0,0,0,0)));
 
         JButton classListBtn = new JButton("Class List");
-        classListBtn.setBackground(Color.LIGHT_GRAY);
-        classListBtn.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton inputGradesBtn = new JButton("Input Grades");
-        inputGradesBtn.setBackground(Color.LIGHT_GRAY);
-        inputGradesBtn.setFont(new Font("Arial", Font.BOLD, 40));
+
+        buttonStyle(classListBtn);
+        buttonStyle(inputGradesBtn);
+        btnImage(classListBtn, "res/classListIcon.png");
+        btnImage(inputGradesBtn, "res/recordGradeIcon.png");
 
         classListBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -134,12 +162,18 @@ public class DashboardTeacher extends JFrame{
         JPanel rightPanel = new JPanel(new GridBagLayout());
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         JPanel mainPanel = new JPanel(new GridLayout(1,2));
+
+        panel1.setOpaque(false);
+        leftPanel.setOpaque(false);
+        rightPanel.setOpaque(false);
+        mainPanel.setOpaque(false);
         
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
 
-        frame.add(mainPanel);
-        frame.add(panel1, BorderLayout.NORTH);
+        background.setLayout(new BorderLayout());
+        background.add(panel1, BorderLayout.NORTH);
+        background.add(mainPanel);
 
         frame.setVisible(true);
     }

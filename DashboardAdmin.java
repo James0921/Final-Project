@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -25,42 +26,57 @@ public class DashboardAdmin extends JFrame{
         gbc.insets = inset;
         return gbc;
     }
+
+    public static void buttonStyle(JButton... buttons){
+        for(JButton button : buttons){
+            button.setFont(new Font("Arial", Font.BOLD, 40));
+            button.setBackground(Color.LIGHT_GRAY);
+        }
+    }
+
+    public static void btnImage(JButton button, String imagePath){
+        ImageIcon image = new ImageIcon(DashboardAdmin.class.getResource(imagePath));
+        Image imageResized = image.getImage().getScaledInstance(100,100, Image.SCALE_SMOOTH);
+        ImageIcon iconResized = new ImageIcon(imageResized);
+
+        button.setIcon(iconResized);
+    }
+
     public DashboardAdmin(LoginPage loginPage){
         JFrame frame = new JFrame("Admin Dashboard");
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
+        JPanel background = new JPanel(){
+            public void paintComponent(Graphics g){
+                super.paintComponent(g);
+                Image image = new ImageIcon(getClass().getResource("res/ptcbg2.png")).getImage();
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        frame.setContentPane(background);
+
         JLabel adminLbl = new JLabel(loginPage.getUserName());
         adminLbl.setFont(new Font("Arial", Font.BOLD, 40));
 
         JButton addTeacherBtn = new JButton("Add new Teacher");
-        addTeacherBtn.setBackground(Color.LIGHT_GRAY);
-        addTeacherBtn.setFont(new Font("Arial", Font.BOLD, 40));
-
         JButton addStudentBtn = new JButton("Add new Student");
-        addStudentBtn.setBackground(Color.LIGHT_GRAY);
-        addStudentBtn.setFont(new Font("Arial", Font.BOLD, 40));
-
         JButton teacherRec = new JButton("Teachers Records");
-        teacherRec.setBackground(Color.LIGHT_GRAY);
-        teacherRec.setFont(new Font("Arial", Font.BOLD, 40));
-
         JButton studentRec = new JButton("Students Records");
-        studentRec.setBackground(Color.LIGHT_GRAY);
-        studentRec.setFont(new Font("Arial", Font.BOLD, 40));
-
         JButton manageSubjects = new JButton("Manage Subjects");
-        manageSubjects.setBackground(Color.LIGHT_GRAY);
-        manageSubjects.setFont(new Font("Arial", Font.BOLD, 35));
-
         JButton manageSections = new JButton("Manage Sections");
-        manageSections.setBackground(Color.LIGHT_GRAY);
-        manageSections.setFont(new Font("Arial", Font.BOLD, 35));
-
         JButton manageSchedule = new JButton("Manage Schedule");
-        manageSchedule.setBackground(Color.LIGHT_GRAY);
-        manageSchedule.setFont(new Font("Arial", Font.BOLD, 35));
+
+        buttonStyle(addTeacherBtn, addStudentBtn, teacherRec, studentRec, manageSubjects, manageSections, manageSchedule);
+        btnImage(addTeacherBtn, "res/addTeacher.png");
+        btnImage(addStudentBtn, "res/addStudent.png");
+        btnImage(teacherRec, "res/teacherRecordIcon.png");
+        btnImage(studentRec, "res/StudentRecordIcon.png");
+        btnImage(manageSubjects, "res/subjectsIcon.png");
+        btnImage(manageSections, "res/sectionsIcon.png");
+        btnImage(manageSchedule, "res/scheduleIcon.png");
 
         //*Dto i-modify yung functions
         addStudentBtn.addActionListener(new ActionListener(){
@@ -152,6 +168,12 @@ public class DashboardAdmin extends JFrame{
                 insertBtn.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         UserDao userDao = new UserDao();
+
+                        String middleInitial = middleNameTxt.getText();
+                        if(middleInitial.length() != 1){
+                            JOptionPane.showMessageDialog(null, "Please type exactly one character for middle Initial");
+                            return;
+                        }
 
                         java.sql.Date birthDate= null;
                         try{
@@ -290,6 +312,12 @@ public class DashboardAdmin extends JFrame{
                 insertBtn.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         UserDao userDao = new UserDao();
+
+                        String middleInitial = middleNameTxt.getText();
+                        if(middleInitial.length() != 1){
+                            JOptionPane.showMessageDialog(null, "Please type exactly one character for middle Initial");
+                            return;
+                        }
 
                         java.sql.Date birthDate = null;
                         try {
@@ -731,9 +759,19 @@ public class DashboardAdmin extends JFrame{
         bottomPanel.setPreferredSize(new Dimension(1000,175));
         botPanel.setPreferredSize(new Dimension(500,175));
 
-        frame.add(panel1, BorderLayout.NORTH);
-        frame.add(mainBodyPanel, BorderLayout.CENTER);
-        frame.add(combinedBottomPanel, BorderLayout.SOUTH);
+        panel1.setOpaque(false);
+        mainBodyPanel.setOpaque(false);
+        combinedBottomPanel.setOpaque(false);
+        leftPanel.setOpaque(false);
+        rightPanel.setOpaque(false);
+        bottomPanel.setOpaque(false);
+        botPanel.setOpaque(false);
+
+        background.setLayout(new BorderLayout());
+
+        background.add(panel1, BorderLayout.NORTH);
+        background.add(mainBodyPanel, BorderLayout.CENTER);
+        background.add(combinedBottomPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
     } 
 

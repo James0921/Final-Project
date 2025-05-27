@@ -350,6 +350,44 @@ public class UserDao{
         }
     }
 
+    public String getName(String username){
+        String checkIfStudent = "select count(*) from students where lower(username) = lower(?)";
+        String studentName = "select concat(first_name, ' ', middle_initial, '. ', last_name) as fullName from students where lower(username) = (?)";
+        String teacherName = "select concat(first_name, ' ', middle_initial, '. ', last_name) as fullName from teachers where lower(username) = (?)";
+
+        try(Connection conn = DBConnection.getConnection()){
+            PreparedStatement ifStudentPst = conn.prepareStatement(checkIfStudent);
+            ifStudentPst.setString(1, username);
+            ResultSet ifStudentrs = ifStudentPst.executeQuery();
+
+            if(ifStudentrs.next()){
+                int count = ifStudentrs.getInt(1);
+                if(count > 0){
+                    PreparedStatement studentNamePst = conn.prepareStatement(studentName);
+                    studentNamePst.setString(1, username);
+                    try(ResultSet rs = studentNamePst.executeQuery()){
+                        if(rs.next()){
+                            return rs.getString("fullName");
+                        }
+                    }
+                }
+            }
+                
+            PreparedStatement teacherNamePst = conn.prepareStatement(teacherName);
+            teacherNamePst.setString(1,username);
+
+            try(ResultSet rs = teacherNamePst.executeQuery()){
+                if(rs.next()){
+                    return rs.getString("fullName");
+                }
+            }            
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean updateStudentGrade(Double grade, String subject, String name){
         String selectSql = "SELECT student_id FROM students WHERE lower(concat(last_name, ', ', first_name, ' ', middle_initial)) LIKE lower(?)";
         String checkSql = "SELECT COUNT(*) FROM grades WHERE student_id = ? and subject = ?";
